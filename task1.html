@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    form {
+      display: flex;
+      position: relative;
+      top: 200px;
+      justify-content: center;
+    }
+    span {
+      color: red;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <form id="myForm">
+    <table>
+      <tr>
+        <td>Name:</td>
+        <td><input id="name" type="text" placeholder="Enter Your Name"></td>
+        <td><span id="nameError">Name cannot be empty</span></td>
+      </tr>
+      <tr>
+        <td>Email:</td>
+        <td><input id="email" type="text" placeholder="Enter Your Email"></td>
+        <td><span id="emailError">Invalid email </span></td>
+      </tr>
+      <tr>
+        <td>Password:</td>
+        <td><input id="password" type="password" placeholder="Enter Your Password"></td>
+        <td><span id="passwordError">Password must be at least 6 characters</span></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><input id="submit" type="submit" value="Submit" disabled></td>
+      </tr>
+    </table>
+  </form>
+
+  <script>
+    const name = document.getElementById("name");
+    const email = document.getElementById("email");
+    const password = document.getElementById("password");
+    const submit = document.getElementById("submit");
+
+    const nameError = document.getElementById("nameError");
+    const emailError = document.getElementById("emailError");
+    const passwordError = document.getElementById("passwordError");
+
+    const nameRegx = /^[a-zA-Z]+$/;
+    const emailRegx = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,}$/;
+    const passwordRegx = /^.{6,}$/; // at least 6 characters
+
+    function validateForm() {
+      let valid = true;
+
+      // Name check
+      if (!nameRegx.test(name.value)) {
+        nameError.style.display = "inline";
+        valid = false;
+      } else {
+        nameError.style.display = "none";
+      }
+
+      // Email check
+      if (!emailRegx.test(email.value)) {
+        emailError.style.display = "inline";
+        valid = false;
+      } else {
+        emailError.style.display = "none";
+      }
+
+      // Password check
+      if (!passwordRegx.test(password.value)) {
+        passwordError.style.display = "inline";
+        valid = false;
+      } else {
+        passwordError.style.display = "none";
+      }
+
+      // Enable or disable submit
+      if (valid === true) {
+        submit.removeAttribute("disabled");
+      } else {
+        submit.setAttribute("disabled", "true");
+      }
+    }
+
+    // Run validation while typing
+    [name, email, password].forEach(input => {
+      input.addEventListener("input", validateForm);
+    });
+
+   
+  </script>
+</body>
+</html>
